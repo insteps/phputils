@@ -1,4 +1,4 @@
 phputils
 ========
 
-Some useful php fuctions/util
+Some useful php functions/utils.

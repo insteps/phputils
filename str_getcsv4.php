@@ -1,10 +1,8 @@
 <?php
 /**
- * Copyright (c) 2012-2013 V.Krishn <vkrishn4@gmail.com>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -17,7 +15,7 @@
  *
  * @category  PHP
  * @author    V.Krishn <vkrishn4@gmail.com>
- * @copyright V.Krishn <vkrishn4@gmail.com>, All rights reserved.
+ * @copyright Copyright (c) 2012-2013 V.Krishn <vkrishn4@gmail.com>
  * @license   GPL
  * @link      http://github.com/insteps/phputils
  * @version   0.1.0
@@ -31,33 +29,33 @@
   * @param string $enclosure String
   * @return array
   */
-function str_getcsv4($input, $delimiter = ',', $enclosure = '"') {
+ function str_getcsv4($input, $delimiter = ',', $enclosure = '"') {
 
-    if( ! preg_match("/[$enclosure]/", $input) ) {
-      return (array)preg_replace(array("/^\\s*/", "/\\s*$/"), '', explode($delimiter, $input));
-    }
+     if( ! preg_match("/[$enclosure]/", $input) ) {
+         return (array)preg_replace(array("/^\\s*/", "/\\s*$/"), '', explode($delimiter, $input));
+     }
 
-    $token = "##"; $token2 = "::";
-    //alternate tokens "\034\034", "\035\035", "%%";
-    $t1 = preg_replace(array("/\\\[$enclosure]/", "/$enclosure{2}/",
-         "/[$enclosure]\\s*[$delimiter]\\s*[$enclosure]\\s*/", "/\\s*[$enclosure]\\s*/"),
-         array($token2, $token2, $token, $token), trim(trim(trim($input), $enclosure)));
+     $token = "##"; $token2 = "::";
+     //alternate tokens "\034\034", "\035\035", "%%";
+     $t1 = preg_replace(array("/\\\[$enclosure]/", "/$enclosure{2}/",
+          "/[$enclosure]\\s*[$delimiter]\\s*[$enclosure]\\s*/", "/\\s*[$enclosure]\\s*/"),
+          array($token2, $token2, $token, $token), trim(trim(trim($input), $enclosure)));
 
-    $a = explode($token, $t1);
-    foreach($a as $k=>$v) {
-        if ( preg_match("/^{$delimiter}/", $v) || preg_match("/{$delimiter}$/", $v) ) {
-            $a[$k] = trim($v, $delimiter); $a[$k] = preg_replace("/$delimiter/", "$token", $a[$k]); }
-    }
-    $a = explode($token, implode($token, $a));
-    return (array)preg_replace(array("/^\\s/", "/\\s$/", "/$token2/"), array('', '', $enclosure), $a);
+     $a = explode($token, $t1);
+     foreach($a as $k=>$v) {
+         if ( preg_match("/^{$delimiter}/", $v) || preg_match("/{$delimiter}$/", $v) ) {
+             $a[$k] = trim($v, $delimiter); $a[$k] = preg_replace("/$delimiter/", "$token", $a[$k]);
+         }
+     }
+     $a = explode($token, implode($token, $a));
+     return (array)preg_replace(array("/^\\s/", "/\\s$/", "/$token2/"), array('', '', $enclosure), $a);
 
-}
+ }
 
-if ( ! function_exists('str_getcsv')) {
-  function str_getcsv($input, $delimiter = ',', $enclosure = '"') {
-    return str_getcsv4($input, $delimiter, $enclosure);
-  }
-}
-
+ if ( ! function_exists('str_getcsv')) {
+     function str_getcsv($input, $delimiter = ',', $enclosure = '"') {
+       return str_getcsv4($input, $delimiter, $enclosure);
+     }
+ }
 
 
