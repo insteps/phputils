@@ -20,7 +20,6 @@
  * @copyright V.Krishn <vkrishn4@gmail.com>, All rights reserved.
  * @license   GPL
  * @link      http://github.com/insteps/phputils
- * @name      str_getcsv4
  * @version   0.1.0
  *
  */
@@ -39,6 +38,7 @@ function str_getcsv4($input, $delimiter = ',', $enclosure = '"') {
     }
 
     $token = "##"; $token2 = "::";
+    //alternate tokens "\034\034", "\035\035", "%%";
     $t1 = preg_replace(array("/\\\[$enclosure]/", "/$enclosure{2}/",
          "/[$enclosure]\\s*[$delimiter]\\s*[$enclosure]\\s*/", "/\\s*[$enclosure]\\s*/"),
          array($token2, $token2, $token, $token), trim(trim(trim($input), $enclosure)));
