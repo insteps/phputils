@@ -53,4 +53,11 @@ function str_getcsv4($input, $delimiter = ',', $enclosure = '"') {
 
 }
 
+if ( ! function_exists('str_getcsv')) {
+  function str_getcsv($input, $delimiter = ',', $enclosure = '"') {
+    return str_getcsv4($input, $delimiter, $enclosure);
+  }
+}
+
+
 
