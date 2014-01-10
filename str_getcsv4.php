@@ -15,10 +15,10 @@
  *
  * @category  PHP
  * @author    V.Krishn <vkrishn4@gmail.com>
- * @copyright Copyright (c) 2012-2013 V.Krishn <vkrishn4@gmail.com>
+ * @copyright Copyright (c) 2012-2014 V.Krishn <vkrishn4@gmail.com>
  * @license   GPL
  * @link      http://github.com/insteps/phputils
- * @version   0.1.0
+ * @version   0.1.1
  *
  */
 
@@ -52,9 +52,46 @@
 
  }
 
+/**
+  * Parse a CSV string into an array for php 4+. (Alternate)
+  * @param string $input String
+  * @param string $delimiter String
+  * @param string $enclosure String
+  * @return array
+  */
+ function str_getcsv4a($input, $delimiter = ',', $enclosure = '"') {
+
+     if( ! preg_match("/[$enclosure]/", $input) ) {
+         return (array)preg_replace(array("/^\\s*/", "/\\s*$/"), '', explode($delimiter, $input));
+     }
+
+     $a = explode($delimiter, $input);
+
+     foreach($a as $k=>$v) {
+
+        if ( preg_match("/{$enclosure}$/", rtrim($v)) ) {
+          $on = 0;
+          $c[] = $v; $b[] = trim(trim(implode(',', $c)), $enclosure);
+          unset($c); continue;
+        }
+        if ( preg_match("/^{$enclosure}/", ltrim($v)) ) {
+          $on = 1; unset($c);
+          $v = ltrim(ltrim($v), $enclosure);
+        }
+        if ( $on ) { $c[] = $v; continue; }
+
+        $b[] = trim($a[$k]);
+
+     }
+
+      return (array)$b;
+
+ }
+
  if ( ! function_exists('str_getcsv')) {
      function str_getcsv($input, $delimiter = ',', $enclosure = '"') {
-       return str_getcsv4($input, $delimiter, $enclosure);
+       //return str_getcsv4($input, $delimiter, $enclosure); //OLDER
+       return str_getcsv4a($input, $delimiter, $enclosure); //NEWER
      }
  }
 
