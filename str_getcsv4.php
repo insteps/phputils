@@ -15,10 +15,10 @@
  *
  * @category  PHP
  * @author    V.Krishn <vkrishn4@gmail.com>
- * @copyright Copyright (c) 2012-2014 V.Krishn <vkrishn4@gmail.com>
+ * @copyright Copyright (c) 2012-2015 V.Krishn <vkrishn4@gmail.com>
  * @license   GPL
  * @link      http://github.com/insteps/phputils
- * @version   0.1.1
+ * @version   0.1.2
  *
  */
 
@@ -66,6 +66,7 @@
      }
 
      $a = explode($delimiter, $input);
+     $on = NULL;
 
      foreach($a as $k=>$v) {
 
